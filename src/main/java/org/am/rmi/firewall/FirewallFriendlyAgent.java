@@ -35,7 +35,7 @@ public class FirewallFriendlyAgent {
 		System.setProperty("java.rmi.server.randomIDs", "true");
 
 		// Start an RMI registry on port specified by example.rmi.agent.port
-		final String host = System.getProperty(HOST_SYS_PROPERTY, DEFAULT_HOST);
+		final String hostname = System.getProperty(HOST_SYS_PROPERTY, DEFAULT_HOST);
 		final int port = Integer.parseInt(System.getProperty(PORT_SYS_PROPERTY, DEFAULT_PORT));
 		System.out.println(PREFIX + "Create RMI registry on port " + port);
 		LocateRegistry.createRegistry(port);
@@ -67,8 +67,6 @@ public class FirewallFriendlyAgent {
 		// Here we use the same port as that we choose for the RMI registry.
 		// The port for the RMI registry is specified in the second part
 		// of the URL, in "rmi://"+hostname+":"+port
-
-		final String hostname = InetAddress.getLocalHost().getHostName();
 
 		System.out.println(PREFIX + "Create an RMI connector server. Url for access: " + getServiceUrl(port, hostname));
 		JMXServiceURL url = new JMXServiceURL(getServiceUrl(port, hostname));
