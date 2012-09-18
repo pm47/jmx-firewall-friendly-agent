@@ -19,8 +19,10 @@ import java.util.HashMap;
  */
 public class FirewallFriendlyAgent {
 
-	public static final String DEFAULT_PORT = "62277";
-	public static final String PORT_SYS_PROPERTY = "org.am.rmi.port";
+	public static final String DEFAULT_HOST= "localhost";
+	public static final String DEFAULT_PORT = "22000";
+	public static final String HOST_SYS_PROPERTY = "jmx.host";
+	public static final String PORT_SYS_PROPERTY = "jmx.port";
 	public static final String PREFIX = "Firewall Friendly Agent: ";
 	
 	private FirewallFriendlyAgent() {}
@@ -33,6 +35,7 @@ public class FirewallFriendlyAgent {
 		System.setProperty("java.rmi.server.randomIDs", "true");
 
 		// Start an RMI registry on port specified by example.rmi.agent.port
+		final String host = System.getProperty(HOST_SYS_PROPERTY, DEFAULT_HOST);
 		final int port = Integer.parseInt(System.getProperty(PORT_SYS_PROPERTY, DEFAULT_PORT));
 		System.out.println(PREFIX + "Create RMI registry on port " + port);
 		LocateRegistry.createRegistry(port);
@@ -71,8 +74,7 @@ public class FirewallFriendlyAgent {
 		JMXServiceURL url = new JMXServiceURL(getServiceUrl(port, hostname));
 
 		// Now create the server from the JMXServiceURL
-		JMXConnectorServer cs =
-			JMXConnectorServerFactory.newJMXConnectorServer(url, env, mbs);
+		JMXConnectorServer cs = JMXConnectorServerFactory.newJMXConnectorServer(url, env, mbs);
 
 		// Start the RMI connector server.
 		System.out.println(PREFIX + "Start the RMI connector server on port " + port);

@@ -5,17 +5,17 @@ Idea taken from:
 to use agent execute:
 
 <pre><code>
-    java -Dorg.am.rmi.port=<DESIRED_PORT> -javaagent:<PATH_TO_AGENT_JAR> ... (other stuff)
+    java -Djmx.host=<DESIRED_HOSTNAME> -Djmx.port=<DESIRED_PORT> -javaagent:<PATH_TO_AGENT_JAR> ... (other stuff)
 </code></pre>	
 
 Example (tunneling friendly):
 
 <pre><code>
-    java -Djava.rmi.server.hostname=localhost -javaagent:jmx-firewall-friendly-agent-1.0-SNAPSHOT.jar ... (other stuff)
+    java -Djmx.port=22000 -javaagent:jmx-firewall-friendly-agent-1.0-SNAPSHOT.jar ... (other stuff)
 </code></pre>	
 
-You should use this URL then (after tunneling port 62277):
+You should use this URL then (after tunneling chosen port):
 
 <pre><code>
-    service:jmx:rmi://localhost:62277/jndi/rmi://localhost:62277/jmxrmi
+    service:jmx:rmi://localhost:22000/jndi/rmi://localhost:22000/jmxrmi
 </code></pre>	
